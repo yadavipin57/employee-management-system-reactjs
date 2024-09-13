@@ -3,9 +3,11 @@ import { clientUrl } from "../utilities/constants.js";
 import moment from "moment";
 
 const useEmpForm = (
-    setIsFormOpen,
-    setRefresh,
-    singleEmpData,setSingleEmpData) => {
+  setIsFormOpen,
+  setRefresh,
+  singleEmpData,
+  setSingleEmpData
+) => {
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("Male");
@@ -17,17 +19,16 @@ const useEmpForm = (
   const [position, setPosition] = useState("");
   const [empId, setEmpId] = useState(0);
 
-  
-
   useEffect(() => {
-    console.log(singleEmpData);
-    
+    // console.log(singleEmpData);
+
     if (!singleEmpData) return;
 
     setFullName(singleEmpData.fullName);
     setEmpId(singleEmpData.empId);
     setGender(singleEmpData.gender);
     setDob(moment(singleEmpData.dob, "DD-MM-YYYY").format("YYYY-MM-DD"));
+    // setDob(singleEmpData.dob)
     setNationality(singleEmpData.nationality);
     setCity(singleEmpData.city);
     setState(singleEmpData.state);
@@ -47,12 +48,13 @@ const useEmpForm = (
     setDept("");
     setPosition("");
     setGender("Male");
-    setSingleEmpData(null)
+    setSingleEmpData(null);
   };
 
   const postEmpData = {
     fullName,
     dob: moment(dob, "YYYY-MM-DD").format("DD-MM-YYYY"),
+    // dob,
     gender,
     nationality,
     city,
@@ -64,8 +66,9 @@ const useEmpForm = (
   };
 
   const handleAddEmpData = async (e) => {
+    // console.log(e, "ADDED")
     e.preventDefault();
-    console.log(postEmpData);
+    // console.log(postEmpData);
     try {
       const response = await fetch(`${clientUrl}/postEmpData`, {
         method: "POST",
@@ -75,10 +78,14 @@ const useEmpForm = (
         body: JSON.stringify(postEmpData),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to update data.");
+      }
+
       // Wait for the response and parse it as text (or json if the server responds with JSON)
       const result = await response.text();
 
-      console.log(result); // This will log "Data inserted successfully..." or the error message
+      // console.log(result); // This will log "Data inserted successfully..." or the error message
       // alert(result); // Display the response message in an alert box
       handleFormClose();
       const random = Math.random();
@@ -90,7 +97,7 @@ const useEmpForm = (
 
   const handleUpdateEmpData = async (e) => {
     e.preventDefault();
-    console.log("SEFdskjSEXY");
+    // console.log(e, "UPDATED")
 
     try {
       const response = await fetch(`${clientUrl}/updateData`, {
@@ -100,6 +107,10 @@ const useEmpForm = (
         },
         body: JSON.stringify({ ...postEmpData, empId }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to update data.");
+      }
       const res = await response.text();
       const random = Math.random();
       setRefresh(random);
@@ -132,7 +143,7 @@ const useEmpForm = (
     handleUpdateEmpData,
     handleFormClose,
   };
-  return {...exportEmpDataToEmpForm};
+  return { ...exportEmpDataToEmpForm };
 };
 
 export default useEmpForm;
