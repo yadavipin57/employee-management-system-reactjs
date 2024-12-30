@@ -54,29 +54,28 @@ app.post("/postEmpData", (req, res) => {
   });
 });
 
-
 // This is Update
 
 app.put("/updateData", (req, res) => {
   const sqlQuerry =
     "UPDATE employee_details SET fullName = ?, dob = ?, gender = ?, nationality = ?, city = ?, state = ?, contact = ?, dept = ?, position = ? WHERE empId = ?";
-    const values = [
-      req.body.fullName,
-        req.body.dob,
-        req.body.gender,
-        req.body.nationality,
-        req.body.city,
-        req.body.state,
-        req.body.contact,
-        req.body.dept,
-        req.body.position,
-        req.body.empId
-      ];
-      console.log("PUT Data:", values);
-      dbConnection.query(sqlQuerry, values, (error, data)=>{
-        if(error) return res.json(error);
-        res.status(200).send("Data updated successfully");
-      })
+  const values = [
+    req.body.fullName,
+    req.body.dob,
+    req.body.gender,
+    req.body.nationality,
+    req.body.city,
+    req.body.state,
+    req.body.contact,
+    req.body.dept,
+    req.body.position,
+    req.body.empId,
+  ];
+  console.log("PUT Data:", values);
+  dbConnection.query(sqlQuerry, values, (error, data) => {
+    if (error) return res.json(error);
+    res.status(200).send("Data updated successfully");
+  });
 });
 
 // This is Delete
@@ -88,7 +87,6 @@ app.delete("/deleteData", (req, res) => {
     res.status(200).send("Data deleted successfully");
   });
 });
-
 
 app.listen(port, () => {
   console.log("Server is running on port:", port);

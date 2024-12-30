@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
 import useEmpForm from "../Hooks/useEmpForm";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EmpForm = ({
   isFormOpen,
@@ -34,7 +35,7 @@ const EmpForm = ({
     handleAddEmpData,
     handleUpdateEmpData,
     handleFormClose,
-  } = useEmpForm(setIsFormOpen, setRefresh, singleEmpData,setSingleEmpData);
+  } = useEmpForm(setIsFormOpen, setRefresh, singleEmpData, setSingleEmpData);
 
   return (
     <div
@@ -63,13 +64,12 @@ const EmpForm = ({
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
-          <input
+          <DatePicker
+            selected={dob ? new Date(dob) : null}
+            onChange={(date) => setDob(date.toISOString().split("T")[0])}
             className="px-3 py-1 border border-black outline-none w-[300px]"
-            type="date"
-            value={dob}
-            onChange={(e) => {
-              setDob(e.target.value);
-            }}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Type DD/MM/YYYY"
           />
           <div className="w-[300px] flex items-center gap-1">
             <label htmlFor="">Gender</label>
