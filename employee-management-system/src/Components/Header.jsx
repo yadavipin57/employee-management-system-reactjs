@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 
-const Header = ({setIsFormOpen, setIsUpdate, isUpdate}) => {
+const Header = ({setIsFormOpen, setIsUpdate}) => {
 
   const handleFormOpen = () =>{
     setIsFormOpen(true)

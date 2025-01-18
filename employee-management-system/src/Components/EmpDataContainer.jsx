@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { clientUrl, tableHeader } from "../utilities/constants.js";
+import {
+  clientUrl,
+  tableHeader,
+  databaseColumnNames,
+} from "../utilities/constants.js";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect } from "react";
 import useEmpForm from "../Hooks/useEmpForm.js";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const EmpDataContainer = ({
   refresh,
@@ -13,6 +18,7 @@ const EmpDataContainer = ({
   setSingleEmpData,
 }) => {
   const [empData, setEmpData] = useState(null); // null aesehi rakh
+  const [sortOrder, setSortOrder] = useState("ASC");
 
   useEffect(() => {
     getEmpData();
@@ -25,9 +31,24 @@ const EmpDataContainer = ({
     setEmpData(json);
   };
 
-  // const handleDelete = ()=>{
+  // SORTING
 
-  // }
+  const handleSortData = async (index) => {
+    const columnName = databaseColumnNames[index];
+    const newOrder = sortOrder === "ASC" ? "DESC" : "ASC"; // toggle the order
+
+    // Update the state
+    setSortOrder(newOrder);
+
+    // Fetch sorted data after the state update
+    const empResponseData = await fetch(
+      `${clientUrl}/sortData?column=${columnName}&order=${newOrder}`
+    );
+    const json = await empResponseData.json();
+    setEmpData(json);
+  };
+
+  // DELETE
 
   const handleDelete = async (empId) => {
     try {
@@ -62,9 +83,19 @@ const EmpDataContainer = ({
       <table className="w-full border-collapse border border-black">
         <thead>
           <tr>
-            {tableHeader.map((theader) => (
-              <th key={theader} className="border border-black">
+            {tableHeader.map((theader, index) => (
+              <th
+                key={index}
+                className="border border-black cursor-pointer hover:bg-gray-200"
+                onClick={() => handleSortData(index)} // Trigger sorting
+                title="Sort data"
+              >
                 {theader}
+                <span className="">
+                  <KeyboardArrowDownIcon
+                    sx={{ fontSize: 12, color: "black" }}
+                  />
+                </span>
               </th>
             ))}
           </tr>

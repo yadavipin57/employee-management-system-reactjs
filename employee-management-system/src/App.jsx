@@ -19,7 +19,6 @@ const App = () => {
     singleEmpData,
     setSingleEmpData,
   };
-  console.log({...commonProps})
 
   return (
     <>
