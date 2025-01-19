@@ -19,7 +19,8 @@ const dbConnection = mysql.createConnection({
 
 app.get("/empdata", (req, res) => {
   // req and res is object
-  const sqlQuerry = "SELECT * FROM employee_details";
+  const sqlQuerry =
+    "SELECT * FROM employee_details";
   dbConnection.query(sqlQuerry, (error, data) => {
     // This call back takes two para, "error" and "data" from database
     if (error) return res.json(error);
@@ -91,14 +92,14 @@ app.delete("/deleteData", (req, res) => {
 // This is sorting
 
 app.get("/sortData", (req, res) => {
-  const { column, order = "asc" } = req.query;  // Access query params
-  
+  const { column, order = "asc" } = req.query; // Access query params
+
   if (!column) {
     return res.status(400).send("Column parameter is required");
   }
-  
+
   const sqlQuerry = `SELECT * FROM employee_details ORDER BY ${column} ${order.toUpperCase()}`;
-  
+
   dbConnection.query(sqlQuerry, (error, data) => {
     if (error) return res.json(error);
     res.json(data);

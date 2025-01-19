@@ -23,6 +23,13 @@ const EmpForm = ({
     contact,
     dept,
     position,
+    rating,
+    empType,
+    doj,
+    experience,
+    salary,
+    highestQualification,
+    status,
     setFullName,
     setDob,
     setNationality,
@@ -32,6 +39,13 @@ const EmpForm = ({
     setDept,
     setPosition,
     setGender,
+    setRating,
+    setEmpType,
+    setDoj,
+    setExperience,
+    setSalary,
+    setHighestsQualification,
+    setStatus,
     handleAddEmpData,
     handleUpdateEmpData,
     handleFormClose,
@@ -48,7 +62,7 @@ const EmpForm = ({
           <h3 className="py-3 font-bold text-xl">
             {isUpdate ? "Update Employee Details" : "Add Employee Details"}
           </h3>
-          <div className="cursor-pointer" onClick={handleFormClose}>
+          <div className="cursor-pointer hover:bg-gray-300 rounded-full" onClick={handleFormClose}>
             <CloseIcon />
           </div>
           {/* className="" can also be used above */}
@@ -69,7 +83,7 @@ const EmpForm = ({
             onChange={(date) => setDob(date.toISOString().split("T")[0])}
             className="px-3 py-1 border border-black outline-none w-[300px]"
             dateFormat="dd/MM/yyyy"
-            placeholderText="Type DD/MM/YYYY"
+            placeholderText="Date of birth: Type DD/MM/YYYY"
           />
           <div className="w-[300px] flex items-center gap-1">
             <label htmlFor="">Gender</label>
@@ -127,6 +141,65 @@ const EmpForm = ({
             placeholder="Position"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
+          />
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Rating"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+          />
+          {/* <DatePicker
+            selected={doj ? new Date(doj) : null}
+            onChange={(date) =>
+              setDoj(date ? date.toISOString().split("T")[0] : "")
+            } // Set the value only if the date is valid
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Date of joining: Type DD/MM/YYYY"
+          /> */}
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Date of joining"
+            value={doj}
+            onChange={(e) => setDoj(e.target.value)}
+          />
+
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Employee type"
+            value={empType}
+            onChange={(e) => setEmpType(e.target.value)}
+          />
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Experience"
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+          />
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Salary"
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
+          />
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Highest Qualification"
+            value={highestQualification}
+            onChange={(e) => setHighestsQualification(e.target.value)}
+          />
+          <input
+            className="px-3 py-1 border border-black outline-none w-[300px]"
+            type="text"
+            placeholder="Status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
           />
           <button
             type="submit"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   clientUrl,
   tableHeader,
@@ -7,7 +7,6 @@ import {
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect } from "react";
-import useEmpForm from "../Hooks/useEmpForm.js";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const EmpDataContainer = ({
@@ -16,6 +15,7 @@ const EmpDataContainer = ({
   setIsFormOpen,
   setIsUpdate,
   setSingleEmpData,
+  setIsEmpDetailsOpen,
 }) => {
   const [empData, setEmpData] = useState(null); // null aesehi rakh
   const [sortOrder, setSortOrder] = useState("ASC");
@@ -76,19 +76,24 @@ const EmpDataContainer = ({
     setIsFormOpen(true);
   };
 
+  const handleEmpDetails = (empData) => {
+    setSingleEmpData(empData)
+    setIsEmpDetailsOpen(true);
+  };
+
   // if(!empData) return <p>Loading......</p> // ----> This is better used for Shimmering effect
 
   return (
     <div className="my-3 px-3">
       <table className="w-full border-collapse border border-black">
         <thead>
-          <tr>
+          <tr className="bg-blue-300">
             {tableHeader.map((theader, index) => (
               <th
                 key={index}
-                className="border border-black cursor-pointer hover:bg-gray-200"
-                onClick={() => handleSortData(index)} // Trigger sorting
-                title="Sort data"
+                className={`border border-black cursor-pointer hover:bg-blue-200`}
+                onClick={() => index !== 10 && handleSortData(index)}
+                title={index === 10 ? "" : "Sort data"} // Trigger sorting
               >
                 {theader}
                 <span className="">
@@ -100,18 +105,24 @@ const EmpDataContainer = ({
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="[&>*:nth-child(odd)]:bg-white [&>*:nth-child(even)]:bg-blue-200">
           {empData &&
             empData.map((item) => {
               return (
                 <tr key={item.empId}>
-                  {Object.keys(item).map((tdData, i) => {
-                    return (
-                      <td className="border border-black text-center" key={i}>
-                        {item[tdData]}
-                      </td>
-                    );
-                  })}
+                  {Object.keys(item)
+                    .slice(0, 10)
+                    .map((tdData, index) => {
+                      return (
+                        <td
+                          className={`border border-black text-center cursor-pointer`}
+                          key={index}
+                          onClick={() => index === 0 && handleEmpDetails(item)}
+                        >
+                          {item[tdData]}
+                        </td>
+                      );
+                    })}
                   <td className="border text-center space-x-3 border-black">
                     <span onClick={() => handleUpdate(item)}>
                       <CreateIcon className="cursor-pointer" />

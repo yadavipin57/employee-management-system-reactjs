@@ -1,0 +1,17 @@
+city
+contact
+dept
+dob
+doj
+empId----1
+empType
+experience
+fullName -----2
+gender
+highestQualification
+nationality
+position
+rating ----3
+salary
+state
+status

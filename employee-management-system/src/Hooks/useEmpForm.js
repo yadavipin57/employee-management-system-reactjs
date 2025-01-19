@@ -17,6 +17,13 @@ const useEmpForm = (
   const [contact, setContact] = useState("");
   const [dept, setDept] = useState("");
   const [position, setPosition] = useState("");
+  const [rating, setRating] = useState("");
+  const [empType, setEmpType] = useState("");
+  const [doj, setDoj] = useState("");
+  const [experience, setExperience] = useState("");
+  const [salary, setSalary] = useState("");
+  const [highestQualification, setHighestsQualification] = useState("");
+  const [status, setStatus] = useState("");
   const [empId, setEmpId] = useState(0);
 
   useEffect(() => {
@@ -28,13 +35,19 @@ const useEmpForm = (
     setEmpId(singleEmpData.empId);
     setGender(singleEmpData.gender);
     setDob(moment(singleEmpData.dob, "DD-MM-YYYY").format("YYYY-MM-DD"));
-    // setDob(singleEmpData.dob)
     setNationality(singleEmpData.nationality);
     setCity(singleEmpData.city);
     setState(singleEmpData.state);
     setContact(singleEmpData.contact);
     setDept(singleEmpData.dept);
     setPosition(singleEmpData.position);
+    setRating(singleEmpData.rating);
+    setDoj(moment(singleEmpData.doj, "DD-MM-YYYY").format("YYYY-MM-DD"));
+    setEmpType(singleEmpData.empType);
+    setExperience(singleEmpData.experience);
+    setSalary(singleEmpData.salary);
+    setHighestsQualification(singleEmpData.highestQualification);
+    setStatus(singleEmpData.status);
   }, [singleEmpData]);
 
   const handleFormClose = () => {
@@ -48,13 +61,19 @@ const useEmpForm = (
     setDept("");
     setPosition("");
     setGender("Male");
+    setRating("");
+    setDoj("");
+    setEmpType("");
+    setExperience("");
+    setSalary("");
+    setHighestsQualification("");
+    setStatus("");
     setSingleEmpData(null);
   };
 
   const postEmpData = {
     fullName,
     dob: moment(dob, "YYYY-MM-DD").format("DD-MM-YYYY"),
-    // dob,
     gender,
     nationality,
     city,
@@ -62,13 +81,18 @@ const useEmpForm = (
     contact,
     dept,
     position,
+    rating,
+    empType,
+    doj: moment(doj, "YYYY-MM-DD").format("DD-MM-YYYY"),
+    experience,
+    salary,
+    highestQualification,
+    status,
     // key value pair dont need to be written here only if Key and Value pair have same names
   };
 
   const handleAddEmpData = async (e) => {
-    // console.log(e, "ADDED")
     e.preventDefault();
-    // console.log(postEmpData);
     try {
       const response = await fetch(`${clientUrl}/postEmpData`, {
         method: "POST",
@@ -130,6 +154,13 @@ const useEmpForm = (
     contact,
     dept,
     position,
+    rating,
+    empType,
+    doj,
+    experience,
+    salary,
+    highestQualification,
+    status,
     setFullName,
     setDob,
     setNationality,
@@ -139,6 +170,13 @@ const useEmpForm = (
     setDept,
     setPosition,
     setGender,
+    setRating,
+    setEmpType,
+    setDoj,
+    setExperience,
+    setSalary,
+    setHighestsQualification,
+    setStatus,
     handleAddEmpData,
     handleUpdateEmpData,
     handleFormClose,
